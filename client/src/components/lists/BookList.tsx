@@ -32,7 +32,7 @@ const BookItemsList = () => {
       <ListContainer>
         {booksListData?.map((book, index) => (
           <>
-            <ListItem alignItems='flex-start' key={`${book.title}+ ${index}`}>
+            <ListItem alignItems='flex-start' key={`${book.title}+${index}`}>
               <AvatarEl text={stringAvatar(`${book?.title}`) as string} />
               <ListItemEl
                 title={book?.title}
