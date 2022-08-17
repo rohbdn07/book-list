@@ -3,18 +3,23 @@ import { BrowserRouter } from 'react-router-dom'
 
 import NavBar from './components/navbar/NavBar'
 import './App.css'
+import { Box, Container } from '@mui/material'
 
+/**
+ * @description first main component that render the other components
+ * @returns JSX.Element
+ */
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <div className='App'>
-          <header className='App-header'>
-            <NavBar />
-          </header>
-          <div className='app__container'>
-            <AppRoutes />
-          </div>
+          <NavBar />
+          <Container>
+            <Box sx={{ bgcolor: '#e5e5e5', height: 'auto', marginTop: '20px' }}>
+              <AppRoutes />
+            </Box>
+          </Container>
         </div>
       </BrowserRouter>
     </>
