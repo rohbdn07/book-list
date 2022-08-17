@@ -5,6 +5,7 @@
     "main": "server.js",
     "scripts": {
         "build": "rm -rf dist && npx tsc",
+        "start": "NODE_PATH=./dist node dist/server.ts",
         "dev": "NODE_ENV=development nodemon --ignore './src/test/*.test.ts' --exec 'ts-node' ./src/server.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
         "eslint:fix": "eslint . --ext .ts"
