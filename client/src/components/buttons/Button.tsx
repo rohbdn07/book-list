@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 type ButtonProps = {
   text: string
   color?: string
+  submit?: () => void
 }
 
 /**
@@ -21,6 +22,7 @@ const ButtonEl = (props: ButtonProps) => {
         sx={{
           bgcolor: props.color ? props.color : 'none',
         }}
+        onClick={() => props.submit && props?.submit()}
       >
         {props.text}
       </Button>
