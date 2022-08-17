@@ -7,6 +7,17 @@ import router from "./api/routes/index";
 
 const app = express();
 
+//connection to Mangodb...
+const dbURI = `${process.env.MONGO_DB_URI}`;
+mangoose
+    .connect(dbURI, {
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true,
+        // useCreateIndex: true,
+    })
+    .then(() => console.log("CONNECTED to Mongo-DB"))
+    .catch((err) => console.log("there is an error", err));
+
 //listing to LocalHost
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
