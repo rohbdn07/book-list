@@ -9,5 +9,8 @@
         "node": true
     },
     "plugins": ["@typescript-eslint"],
-    "extends":["prettier"]
+    "extends":["prettier"],
+    "rules": {
+      "@typescript-eslint/no-explicit-any": "warn"
+    }
   }
