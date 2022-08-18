@@ -3,25 +3,22 @@ import express from "express";
 import cors from "cors";
 import mangoose from "mongoose";
 const path = require("path");
+
 import router from "./api/routes/index";
+import { config } from "./config/configDB";
+import Logger from "./library/logger";
 
 const app = express();
 
 //connection to Mangodb...
-const dbURI = `${process.env.MONGO_DB_URI}`;
+const dbURI = config.mongo.url;
 mangoose
-    .connect(dbURI, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
-        // useCreateIndex: true,
-    })
-    .then(() => console.log("CONNECTED to Mongo-DB"))
-    .catch((err) => console.log("there is an error", err));
-
-//listing to LocalHost
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
-console.log("  Press CTRL-C to stop\n");
+    .connect(dbURI)
+    .then(() => Logger.info("CONNECTED To MongoDB"))
+    .catch((error) => {
+        Logger.error("Unable to Connect to MongoDB");
+        Logger.error(error);
+    });
 
 // parse json request body
 app.use(express.json());
@@ -47,5 +44,17 @@ if (process.env.NODE_ENV === "production") {
 router.get("*", (req, res) => {
     res.redirect("/api/book/all");
 });
+
+/** Error handling */
+app.use((req, res, next) => {
+    const error = new Error("Current api route doesnot exist");
+    Logger.error(error);
+    return res.status(404).json({ message: error.message });
+});
+
+//listening to LocalHost | PORT
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => Logger.info(`listening on ${PORT}`));
+Logger.info("Press CTRL-C to stop\n");
 
 module.exports = app;
