@@ -1,6 +1,7 @@
 version: "3.7"
 
 services:
+#Mongo db service
     mongo_db:
         image: mongo
         volumes:
@@ -9,12 +10,13 @@ services:
             - "27017:27017"
         networks:
             - book_network
+#Backend for Node js
     backend:
         build:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - ./backend_node:/app/backend_node
+            - ./src:/app/src
             - /app/node_modules
         restart: always
         ports:
@@ -24,15 +26,15 @@ services:
         environment:
           ME_CONFIG_MONGODB_ADMINUSERNAME: root
           ME_CONFIG_MONGODB_ADMINPASSWORD: example
-          ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
         networks:
             - book_network
+#Front-end client for React js
     client:
         build:
             context: ./client
             dockerfile: Dockerfile
         volumes:
-            - ./client/src:/app/src
+            - ./client/src:/app/client/src
             - /app/node_modules
         depends_on:
             - backend
@@ -44,13 +46,14 @@ services:
         tty: true
         networks:
             - book_network
-
+#Network
 networks:
     book_network:
         driver: bridge
-
+#Volumes
 volumes:
     data:
+    backend_data:
     node_modules:
     web-root:
         driver: local
