@@ -2,6 +2,7 @@ node_modules
 client
 npm-debug.log
 build
+dist
 Dockerfile-dev
 Dockerfile
 .dockerignore
