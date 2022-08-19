@@ -1,14 +1,26 @@
+/**
+ *        @file book.service.ts
+ *     @summary Book service to communicate with database
+ * @description This service communicate to database and return response to controllers
+ *   @functions - getAll()
+ *              - post()
+ *              - update()
+ *              - deleteBook()
+ */
+
 import { IBookDetails } from "../api/contollers/book.controller";
 import Book from "../database/model/book.schema";
-import Logger from "../library/logger";
+import { APIError } from "../errors/apiError";
 
 /** Find list of books and return the response to controller */
 const getAll = async () => {
     try {
         const response = await Book.find({});
-        return response;
+        if (response && response.length > 0) {
+            return response;
+        }
     } catch (error) {
-        Logger.error(`Error while Get All data,${error}`);
+        throw new APIError("NOT FOUND", 200, `${error}`);
     }
 };
 
@@ -23,7 +35,7 @@ const post = async ({ title, author, description }: IBookDetails) => {
         const response = await newBookPost.save();
         return response;
     } catch (error) {
-        Logger.error(`Error while Create data,${error}`);
+        throw new APIError("DUPLICATE KEY", 200, `${error}`);
     }
 };
 
@@ -44,7 +56,7 @@ const update = async ({ id, title, author, description }: IBookDetails) => {
         );
         return updatedData;
     } catch (error) {
-        Logger.error(`Error while Update data, ${error}`);
+        throw new APIError("NOT UPDATE", 200, `${error}`);
     }
 };
 
@@ -54,7 +66,7 @@ const deleteBook = async (id: string) => {
         const response = await Book.findByIdAndDelete(id);
         return response;
     } catch (error) {
-        Logger.error(`Unable to delete, ${error}`);
+        throw new APIError("NOT DELETE", 200, `${error}`);
     }
 };
 
