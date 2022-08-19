@@ -1,5 +1,4 @@
-import chalk from "chalk";
-
+const chalk = require("chalk");
 /** Looging information */
 export default class Logger {
     public static log = (args: any) => this.info(args);
