@@ -8,6 +8,7 @@ import path from "path";
 import router from "./api/routes/index";
 import { config } from "./config/configDB";
 import Logger from "./library/logger";
+import errorHandler from "./api/middlewares/errorHandler";
 
 const app = express();
 
@@ -37,6 +38,7 @@ const startServer = async () => {
         });
         next();
     });
+
     // parse json request body
     app.use(express.json());
     // parse urlencoded request body
@@ -46,6 +48,9 @@ const startServer = async () => {
 
     /** Routes */
     app.use("/api/book", router);
+
+    /** API Error Handeling */
+    app.use(errorHandler);
 
     /** Health Check */
     app.get("/ping", (req: Request, res: Response) =>
@@ -67,10 +72,9 @@ const startServer = async () => {
         res.redirect("/api/book/all");
     });
 
-    /** Error handling */
+    /** Routes Error handling if doesnot exist */
     app.use((req: Request, res: Response, next: NextFunction) => {
         const error = new Error("Current api route doesnot exist");
-        Logger.error(error);
         return res.status(404).json({ message: error.message });
     });
 
