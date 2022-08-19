@@ -12,41 +12,42 @@ export interface IBookDetails {
     description: string;
 }
 
-import { Response, Request } from "express";
-import Logger from "../../library/logger";
+import { Response, Request, NextFunction } from "express";
 import BookService from "../../services/book.service";
 
 // call GET: services and return response to client
-const getAllBooks = async (req: Request, res: Response) => {
+const getAllBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data = await BookService.getAll();
         res.status(200).json({ status: true, data });
+        return;
     } catch (error) {
-        Logger.error("there is an error" + error);
-        res.status(400).json({
-            status: false,
-            error: "unable to get all list of books details",
-        });
+        next(error);
     }
 };
 
 // call POST: services and return response to client
-const postBookDetails = async (req: Request, res: Response) => {
+const postBookDetails = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const { title, author, description }: IBookDetails = req.body;
     try {
         const data = await BookService.post({ title, author, description });
         res.status(200).json({ status: true, data });
+        return;
     } catch (error) {
-        Logger.error("Error while posting data" + error);
-        res.status(400).json({
-            status: false,
-            error: "unable to post books details",
-        });
+        next(error);
     }
 };
 
 // call UPDATE: services and return response to client
-const updateBookDetails = async (req: Request, res: Response) => {
+const updateBookDetails = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const { id } = req.params;
     const { title, author, description }: IBookDetails = req.body;
     try {
@@ -57,27 +58,21 @@ const updateBookDetails = async (req: Request, res: Response) => {
             description,
         });
         res.status(200).json({ status: true, data });
+        return;
     } catch (error) {
-        Logger.error("Error while posting data" + error);
-        res.status(400).json({
-            status: false,
-            error: "unable to post books details",
-        });
+        next(error);
     }
 };
 
-// call UPDATE: services and return response to client
-const deleteBook = async (req: Request, res: Response) => {
+// call DELETE: services and return response to client
+const deleteBook = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
         const data = await BookService.deleteBook(id);
         res.status(200).json({ status: true, message: "deleted" });
+        return;
     } catch (error) {
-        Logger.error("Error while deleting book" + error);
-        res.status(400).json({
-            status: false,
-            error: "unable to delete book",
-        });
+        next(error);
     }
 };
 
