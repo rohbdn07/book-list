@@ -36,7 +36,7 @@ To build and run this app locally you MUST need a few things:
 To get started you must follow following steps one after another:
 
 1. Clone this repository
-2. Install npm into your local VSCode by `npm install`.
+2. Install npm into your local VSCode by `npm install`. (optional)
 3. Create `.env` file at the root of the project.
 4. Put the required env variables into .env file, Check below for required env variables.
 5. Run docker compose command. First, simply run this command in the terminal: \
@@ -54,7 +54,7 @@ git clone https://github.com/rohbdn07/book-list.git
 cd book-list
 ```
 
-### 2) Npm install
+### 2) Npm install (optional)
 
 `npm install`
 
