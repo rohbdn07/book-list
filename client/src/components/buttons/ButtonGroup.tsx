@@ -14,13 +14,13 @@ const Container = styled('div')({
  * @description it shows group of buttons
  * @returns JSX Element
  */
-const ButtonGroupEl = ({ submit }: any) => {
+const ButtonGroupEl = ({ createNewSubmit, updateSubmit, deleteSubmit }: any) => {
   return (
     <ButtonGroup aria-label='button group'>
       <Container>
-        <ButtonEl text={'Save new'} submit={submit} />
-        <ButtonEl text={'Save'} />
-        <ButtonEl text={'delete'} color={'red'} />
+        <ButtonEl text={'Save new'} submit={createNewSubmit} />
+        <ButtonEl text={'Save'} submit={updateSubmit} />
+        <ButtonEl text={'delete'} submit={deleteSubmit} color={'red'} />
       </Container>
     </ButtonGroup>
   )
