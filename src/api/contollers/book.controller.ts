@@ -13,6 +13,7 @@ export interface IBookDetails {
 }
 
 import { Response, Request, NextFunction } from "express";
+import Logger from "../../library/logger";
 import BookService from "../../services/book.service";
 
 // call GET: services and return response to client
@@ -49,6 +50,7 @@ const updateBookDetails = async (
     next: NextFunction
 ) => {
     const { id } = req.params;
+    console.log(`id is, ${id}`);
     const { title, author, description }: IBookDetails = req.body;
     try {
         const data = await BookService.update({
