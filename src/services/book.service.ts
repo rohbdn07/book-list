@@ -17,7 +17,7 @@ const getAll = async () => {
     try {
         const response = await Book.find({});
         if (response && response.length > 0) {
-            return response;
+            return response.reverse();
         }
     } catch (error) {
         throw new APIError("NOT FOUND", 200, `${error}`);
