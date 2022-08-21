@@ -17,7 +17,7 @@ const errorHandler = (
 ) => {
     if (error instanceof BaseError) {
         Logger.error(error.message);
-        return res.json({ errors: error.serializeErrors() });
+        return res.json({ status: false, errors: error.serializeErrors() });
     }
     Logger.error(error.message);
     res.json({
