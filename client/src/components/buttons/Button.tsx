@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 type ButtonProps = {
   text: string
   color?: string
-  submit?: () => void
+  submit?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 /**
@@ -22,7 +22,7 @@ const ButtonEl = (props: ButtonProps) => {
         sx={{
           bgcolor: props.color ? props.color : 'none',
         }}
-        onClick={() => props.submit && props?.submit()}
+        onClick={(e) => props.submit && props?.submit(e)}
       >
         {props.text}
       </Button>
