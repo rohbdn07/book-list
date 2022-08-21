@@ -19,7 +19,7 @@ const validateReqBody = (req: Request, res: Response, next: NextFunction) => {
             new ValidationError(
                 "VALIDATION ERROR",
                 200,
-                "Please fill-up the required input value"
+                "Please fill-up the all the required input values"
             )
         );
     }
