@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 import HeaderEl from '../headers/HeaderEl'
 import AvatarEl from '../avatar/AvatarEl'
 import ListItemEl from './ListItemEl'
-import { booksListData } from '../../data/BookData'
+import { Book, IBookData } from '../../pages/Home'
 
 // styles
 const ListContainer = styled('div')({
@@ -21,29 +21,39 @@ function stringAvatar(name: string) {
   return `${name.trim().split(' ')[0][0]}`
 }
 
+/** display list of book items */
+function DisplayListItems({ data, handleClick }: IBookData | any) {
+  return (
+    <ListContainer>
+      {data?.map((book: Book, index: number) => (
+        <>
+          <ListItem alignItems='flex-start' key={`${book.title}+${index}`}>
+            <AvatarEl text={stringAvatar(`${book?.title}`) as string} />
+            <ListItemEl
+              id={book._id}
+              title={book?.title}
+              author={book?.author}
+              description={book?.description}
+              handleClick={handleClick}
+            />
+          </ListItem>
+          <Divider />
+        </>
+      ))}
+    </ListContainer>
+  )
+}
+
 /**
  * @description this component displays list of book items
  * @returns JSX.Element
  */
-const BookItemsList = () => {
+const BookItemsList = (props: IBookData | any) => {
+  const { data, handleClick } = props
   return (
     <List sx={{ width: '100%', maxWidth: 400 }}>
       <HeaderEl text={'Book lists'} />
-      <ListContainer>
-        {booksListData?.map((book, index) => (
-          <>
-            <ListItem alignItems='flex-start' key={`${book.title}+${index}`}>
-              <AvatarEl text={stringAvatar(`${book?.title}`) as string} />
-              <ListItemEl
-                title={book?.title}
-                author={book?.author}
-                description={book?.description}
-              />
-            </ListItem>
-            <Divider />
-          </>
-        ))}
-      </ListContainer>
+      <DisplayListItems data={data} handleClick={handleClick} />
     </List>
   )
 }
