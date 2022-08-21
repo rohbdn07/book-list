@@ -34,7 +34,7 @@ services:
             context: ./client
             dockerfile: Dockerfile
         volumes:
-            - ./client/src:/app/client/src
+            - ./client/src:/app/src
             - /app/node_modules
         depends_on:
             - backend
